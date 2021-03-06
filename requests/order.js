@@ -4,6 +4,7 @@ import ServerVersion from '../const-server-version.js';
 
 
 
+
 export function request_placeOrder(serverVersion, p) {
   /*
   p: orderId:OrderId, contract:Contract, order:Order
@@ -607,4 +608,15 @@ export function request_placeOrder(serverVersion, p) {
   }
 
   return flds;
+}
+
+export function request_cancelTickByTickData(serverVersion, requestId) {
+  if (serverVersion < ServerVersion.MIN_SERVER_VER_TICK_BY_TICK) {
+    throw new Error("It does not support tick-by-tick data requests.");
+  }
+
+  return [
+    OutcomeMessageType.CANCEL_TICK_BY_TICK_DATA,
+    requestId
+  ];
 }
